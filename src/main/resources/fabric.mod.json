@@ -5,12 +5,13 @@
   "name": "${modName}",
   "description": "${modDescription}",
   "authors": [
+    "GalievDev",
     "Syorito Hatsuki"
   ],
   "contact": {
-    "homepage": "https://syorito-hatsuki.dev/",
-    "issues": "https://github.com/syorito-hatsuki/${modId}/issues",
-    "sources": "https://github.com/syorito-hatsuki/${modId}"
+    "homepage": "https://galievdev.github.io",
+    "issues": "https://github.com/GalievDev/delicious-teas/issues",
+    "sources": "https://github.com/GalievDev/delicious-teas"
   },
   "license": "MIT Licence",
   "icon": "assets/${modId}/icon.png",
@@ -19,23 +20,21 @@
     "main": [
       {
         "adapter": "kotlin",
-        "value": "dev.syoritohatsuki.${modId}.TemplateMod"
+        "value": "dev.galiev.${modId}.DeliciousTeas"
       }
     ]
   },
   "custom": {
     "modmenu": {
-      "links": {
-        "modmenu.discord": "https://discord.gg/pbwnMwnUD6"
-      },
       "badges": [],
       "update_checker": true
     },
     "mcb": [
       {
-        "name": "Ducky House",
-        "fillColor": -13730510,
-        "outlineColor": -11751600
+        "name": "GalievDev",
+        "labelColor": -1842205,
+        "fillColor": -16727343,
+        "outlineColor": -16610942
       }
     ]
   },
