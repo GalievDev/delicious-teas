@@ -4,6 +4,5 @@ import net.fabricmc.api.ModInitializer
 
 class DeliciousTeas: ModInitializer {
     override fun onInitialize() {
-        TODO("Not yet implemented")
     }
 }
