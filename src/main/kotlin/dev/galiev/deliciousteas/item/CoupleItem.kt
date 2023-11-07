@@ -7,6 +7,7 @@ import net.minecraft.block.Block
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
+import net.minecraft.item.ItemUsage
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.UseAction
@@ -18,10 +19,18 @@ class CoupleItem(block: Block = BlocksRegistry.COUPLE, settings: FabricItemSetti
         return UseAction.DRINK
     }
 
+    override fun getMaxUseTime(stack: ItemStack?): Int {
+        return if (NbtUtils.getBoolean(stack, "hot") && NbtUtils.getBoolean(stack, "tea")) {
+            50
+        } else {
+            35
+        }
+    }
+
     override fun use(world: World?, user: PlayerEntity?, hand: Hand?): TypedActionResult<ItemStack> {
         val stack = user?.getStackInHand(hand)
         if (NbtUtils.getBoolean(stack, "tea")) {
-
+            return ItemUsage.consumeHeldItem(world, user, hand)
         }
         return super.use(world, user, hand)
     }
