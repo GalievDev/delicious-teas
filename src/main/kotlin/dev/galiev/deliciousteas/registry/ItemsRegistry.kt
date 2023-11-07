@@ -1,9 +1,9 @@
 package dev.galiev.deliciousteas.registry
 
+import dev.galiev.deliciousteas.DeliciousTeas.DELICIOUS_TEAS
 import dev.galiev.deliciousteas.DeliciousTeas.MOD_ID
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroups
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
@@ -14,7 +14,7 @@ object ItemsRegistry {
     init {
         ITEMS.keys.forEach{ item ->
             Registry.register(Registries.ITEM, ITEMS[item], item)
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register{
+            ItemGroupEvents.modifyEntriesEvent(DELICIOUS_TEAS).register{
                 it.add(item)
             }
         }
