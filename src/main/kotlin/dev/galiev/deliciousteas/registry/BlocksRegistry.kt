@@ -20,7 +20,7 @@ object BlocksRegistry {
         BLOCKS.keys.forEach { block ->
             Registry.register(Registries.BLOCK, BLOCKS[block], block)
             Registry.register(Registries.ITEM, BLOCKS[block], BlockItem(block, Item.Settings()))
-            ItemGroupEvents.modifyEntriesEvent(DELICIOUS_TEAS).register{
+            ItemGroupEvents.modifyEntriesEvent(DELICIOUS_TEAS).register {
                 it.add(block)
             }
         }
