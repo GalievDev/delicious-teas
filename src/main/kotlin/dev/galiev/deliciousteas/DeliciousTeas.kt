@@ -28,7 +28,7 @@ object DeliciousTeas: ModInitializer {
         BlocksRegistry
         Registry.register(Registries.ITEM_GROUP, DELICIOUS_TEAS, FabricItemGroup.builder().icon {
             ItemStack(BlocksRegistry.BLOCKS.keys.first())
-        }.displayName(Text.literal(MOD_ID.uppercase())).build())
+        }.displayName(Text.literal("Delicious Teas")).build())
     }
 
     private fun registries() {
