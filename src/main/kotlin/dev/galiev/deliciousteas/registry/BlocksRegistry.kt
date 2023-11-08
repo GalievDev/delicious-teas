@@ -2,7 +2,6 @@ package dev.galiev.deliciousteas.registry
 
 import dev.galiev.deliciousteas.DeliciousTeas.DELICIOUS_TEAS
 import dev.galiev.deliciousteas.DeliciousTeas.MOD_ID
-import dev.galiev.deliciousteas.block.Couple
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
@@ -13,8 +12,6 @@ import net.minecraft.util.Identifier
 
 object BlocksRegistry {
     val BLOCKS: MutableMap<Block, Identifier> = mutableMapOf()
-
-    val COUPLE = Couple().create("couple")
 
     init {
         BLOCKS.keys.forEach { block ->
