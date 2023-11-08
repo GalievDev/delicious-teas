@@ -11,7 +11,7 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid()): Block(settings) {
+class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid().noCollision()): Block(settings) {
     private val ingredients: ArrayList<TeaIngredient> = arrayListOf()
 
     @Deprecated("Deprecated in Java")
