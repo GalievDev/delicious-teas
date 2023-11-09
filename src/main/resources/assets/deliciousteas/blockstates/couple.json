@@ -1,5 +1,19 @@
 {
   "variants": {
-    "": { "model": "deliciousteas:block/couple" }
+    "facing=north": {
+      "model": "deliciousteas:block/couple"
+    },
+    "facing=east": {
+      "model": "deliciousteas:block/couple",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "deliciousteas:block/couple",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "deliciousteas:block/couple",
+      "y": 270
+    }
   }
 }
