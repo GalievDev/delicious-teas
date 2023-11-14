@@ -24,9 +24,9 @@ import net.minecraft.world.World
 import java.util.stream.Stream
 
 
-class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid().noCollision()): Block(settings) {
+class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid()): Block(settings) {
     companion object {
-        val FACING = Properties.HOPPER_FACING
+        val FACING = Properties.FACING
     }
     private val ingredients: ArrayList<TeaIngredient> = arrayListOf()
 
@@ -35,22 +35,22 @@ class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
     }
 
     private val SHAPE_N = Stream.of(
-        createCuboidShape(7.0, 1.0, 6.0, 10.0, 4.0, 7.0),
-        createCuboidShape(7.0, 1.0, 10.0, 10.0, 4.0, 11.0),
-        createCuboidShape(6.0, 1.0, 7.0, 7.0, 4.0, 10.0),
-        createCuboidShape(10.0, 1.0, 7.0, 11.0, 4.0, 10.0),
-        createCuboidShape(7.0, 0.0, 7.0, 10.0, 1.0, 10.0),
-        createCuboidShape(8.25, 3.0, 11.0, 8.75, 3.5, 12.0),
-        createCuboidShape(6.5, 0.5, 7.0, 7.0, 1.0, 10.0),
-        createCuboidShape(10.0, 0.5, 7.0, 10.5, 1.0, 10.0),
-        createCuboidShape(7.0, 0.5, 6.5, 10.0, 1.0, 7.0),
-        createCuboidShape(7.0, 0.5, 10.0, 10.0, 1.0, 10.5),
-        createCuboidShape(8.25, 1.5, 12.0, 8.75, 3.0, 12.5),
-        createCuboidShape(10.0, 1.0, 10.0, 10.5, 4.0, 10.5),
-        createCuboidShape(10.0, 1.0, 6.5, 10.5, 4.0, 7.0),
-        createCuboidShape(6.5, 1.0, 6.5, 7.0, 4.0, 7.0),
-        createCuboidShape(6.5, 1.0, 10.0, 7.0, 4.0, 10.5),
-        createCuboidShape(8.25, 1.0, 11.0, 8.75, 1.5, 12.0)
+        createCuboidShape(7.75, 3.0, 9.625, 8.25, 3.5, 10.625),
+        createCuboidShape(6.0, 0.5, 5.625, 6.5, 1.0, 8.625),
+        createCuboidShape(9.5, 0.5, 5.625, 10.0, 1.0, 8.625),
+        createCuboidShape(6.5, 0.5, 5.125, 9.5, 1.0, 5.625),
+        createCuboidShape(6.5, 0.5, 8.625, 9.5, 1.0, 9.125),
+        createCuboidShape(7.75, 1.5, 10.625, 8.25, 3.0, 11.125),
+        createCuboidShape(9.5, 1.0, 8.625, 10.0, 4.0, 9.125),
+        createCuboidShape(9.5, 1.0, 5.125, 10.0, 4.0, 5.625),
+        createCuboidShape(6.0, 1.0, 5.125, 6.5, 4.0, 5.625),
+        createCuboidShape(6.0, 1.0, 8.625, 6.5, 4.0, 9.125),
+        createCuboidShape(7.75, 1.0, 9.625, 8.25, 1.5, 10.625),
+        createCuboidShape(6.5, 1.0, 4.625, 9.5, 4.0, 5.625),
+        createCuboidShape(6.5, 1.0, 8.625, 9.5, 4.0, 9.625),
+        createCuboidShape(5.5, 1.0, 5.625, 6.5, 4.0, 8.625),
+        createCuboidShape(9.5, 1.0, 5.625, 10.5, 4.0, 8.625),
+        createCuboidShape(6.5, 0.0, 5.625, 9.5, 1.0, 8.625)
     ).reduce { v1: VoxelShape?, v2: VoxelShape? ->
         VoxelShapes.combineAndSimplify(
             v1,
@@ -60,22 +60,22 @@ class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
     }.get()
 
     private val SHAPE_E = Stream.of(
-        createCuboidShape(6.0, 1.0, 7.0, 7.0, 4.0, 10.0),
-        createCuboidShape(10.0, 1.0, 7.0, 11.0, 4.0, 10.0),
-        createCuboidShape(7.0, 1.0, 10.0, 10.0, 4.0, 11.0),
-        createCuboidShape(7.0, 1.0, 6.0, 10.0, 4.0, 7.0),
-        createCuboidShape(7.0, 0.0, 7.0, 10.0, 1.0, 10.0),
-        createCuboidShape(11.0, 3.0, 8.25, 12.0, 3.5, 8.75),
-        createCuboidShape(7.0, 0.5, 10.0, 10.0, 1.0, 10.5),
-        createCuboidShape(7.0, 0.5, 6.5, 10.0, 1.0, 7.0),
-        createCuboidShape(6.5, 0.5, 7.0, 7.0, 1.0, 10.0),
-        createCuboidShape(10.0, 0.5, 7.0, 10.5, 1.0, 10.0),
-        createCuboidShape(12.0, 1.5, 8.25, 12.5, 3.0, 8.75),
-        createCuboidShape(10.0, 1.0, 6.5, 10.5, 4.0, 7.0),
-        createCuboidShape(6.5, 1.0, 6.5, 7.0, 4.0, 7.0),
-        createCuboidShape(6.5, 1.0, 10.0, 7.0, 4.0, 10.5),
-        createCuboidShape(10.0, 1.0, 10.0, 10.5, 4.0, 10.5),
-        createCuboidShape(11.0, 1.0, 8.25, 12.0, 1.5, 8.75)
+        createCuboidShape(9.625, 3.0, 7.75, 10.625, 3.5, 8.25),
+        createCuboidShape(5.625, 0.5, 9.5, 8.625, 1.0, 10.0),
+        createCuboidShape(5.625, 0.5, 6.0, 8.625, 1.0, 6.5),
+        createCuboidShape(5.125, 0.5, 6.5, 5.625, 1.0, 9.5),
+        createCuboidShape(8.625, 0.5, 6.5, 9.125, 1.0, 9.5),
+        createCuboidShape(10.625, 1.5, 7.75, 11.125, 3.0, 8.25),
+        createCuboidShape(8.625, 1.0, 6.0, 9.125, 4.0, 6.5),
+        createCuboidShape(5.125, 1.0, 6.0, 5.625, 4.0, 6.5),
+        createCuboidShape(5.125, 1.0, 9.5, 5.625, 4.0, 10.0),
+        createCuboidShape(8.625, 1.0, 9.5, 9.125, 4.0, 10.0),
+        createCuboidShape(9.625, 1.0, 7.75, 10.625, 1.5, 8.25),
+        createCuboidShape(4.625, 1.0, 6.5, 5.625, 4.0, 9.5),
+        createCuboidShape(8.625, 1.0, 6.5, 9.625, 4.0, 9.5),
+        createCuboidShape(5.625, 1.0, 9.5, 8.625, 4.0, 10.5),
+        createCuboidShape(5.625, 1.0, 5.5, 8.625, 4.0, 6.5),
+        createCuboidShape(5.625, 0.0, 6.5, 8.625, 1.0, 9.5)
     ).reduce { v1: VoxelShape?, v2: VoxelShape? ->
         VoxelShapes.combineAndSimplify(
             v1,
@@ -85,22 +85,22 @@ class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
     }.get()
 
     private val SHAPE_S = Stream.of(
-        createCuboidShape(7.0, 1.0, 10.0, 10.0, 4.0, 11.0),
-        createCuboidShape(7.0, 1.0, 6.0, 10.0, 4.0, 7.0),
-        createCuboidShape(10.0, 1.0, 7.0, 11.0, 4.0, 10.0),
-        createCuboidShape(6.0, 1.0, 7.0, 7.0, 4.0, 10.0),
-        createCuboidShape(7.0, 0.0, 7.0, 10.0, 1.0, 10.0),
-        createCuboidShape(8.25, 3.0, 5.0, 8.75, 3.5, 6.0),
-        createCuboidShape(10.0, 0.5, 7.0, 10.5, 1.0, 10.0),
-        createCuboidShape(6.5, 0.5, 7.0, 7.0, 1.0, 10.0),
-        createCuboidShape(7.0, 0.5, 10.0, 10.0, 1.0, 10.5),
-        createCuboidShape(7.0, 0.5, 6.5, 10.0, 1.0, 7.0),
-        createCuboidShape(8.25, 1.5, 4.5, 8.75, 3.0, 5.0),
-        createCuboidShape(6.5, 1.0, 6.5, 7.0, 4.0, 7.0),
-        createCuboidShape(6.5, 1.0, 10.0, 7.0, 4.0, 10.5),
-        createCuboidShape(10.0, 1.0, 10.0, 10.5, 4.0, 10.5),
-        createCuboidShape(10.0, 1.0, 6.5, 10.5, 4.0, 7.0),
-        createCuboidShape(8.25, 1.0, 5.0, 8.75, 1.5, 6.0)
+        createCuboidShape(7.75, 3.0, 5.375, 8.25, 3.5, 6.375),
+        createCuboidShape(9.5, 0.5, 7.375, 10.0, 1.0, 10.375),
+        createCuboidShape(6.0, 0.5, 7.375, 6.5, 1.0, 10.375),
+        createCuboidShape(6.5, 0.5, 10.375, 9.5, 1.0, 10.875),
+        createCuboidShape(6.5, 0.5, 6.875, 9.5, 1.0, 7.375),
+        createCuboidShape(7.75, 1.5, 4.875, 8.25, 3.0, 5.375),
+        createCuboidShape(6.0, 1.0, 6.875, 6.5, 4.0, 7.375),
+        createCuboidShape(6.0, 1.0, 10.375, 6.5, 4.0, 10.875),
+        createCuboidShape(9.5, 1.0, 10.375, 10.0, 4.0, 10.875),
+        createCuboidShape(9.5, 1.0, 6.875, 10.0, 4.0, 7.375),
+        createCuboidShape(7.75, 1.0, 5.375, 8.25, 1.5, 6.375),
+        createCuboidShape(6.5, 1.0, 10.375, 9.5, 4.0, 11.375),
+        createCuboidShape(6.5, 1.0, 6.375, 9.5, 4.0, 7.375),
+        createCuboidShape(9.5, 1.0, 7.375, 10.5, 4.0, 10.375),
+        createCuboidShape(5.5, 1.0, 7.375, 6.5, 4.0, 10.375),
+        createCuboidShape(6.5, 0.0, 7.375, 9.5, 1.0, 10.375)
     ).reduce { v1: VoxelShape?, v2: VoxelShape? ->
         VoxelShapes.combineAndSimplify(
             v1,
@@ -110,22 +110,22 @@ class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
     }.get()
 
     private val SHAPE_W = Stream.of(
-        createCuboidShape(10.0, 1.0, 7.0, 11.0, 4.0, 10.0),
-        createCuboidShape(6.0, 1.0, 7.0, 7.0, 4.0, 10.0),
-        createCuboidShape(7.0, 1.0, 6.0, 10.0, 4.0, 7.0),
-        createCuboidShape(7.0, 1.0, 10.0, 10.0, 4.0, 11.0),
-        createCuboidShape(7.0, 0.0, 7.0, 10.0, 1.0, 10.0),
-        createCuboidShape(5.0, 3.0, 8.25, 6.0, 3.5, 8.75),
-        createCuboidShape(7.0, 0.5, 6.5, 10.0, 1.0, 7.0),
-        createCuboidShape(7.0, 0.5, 10.0, 10.0, 1.0, 10.5),
-        createCuboidShape(10.0, 0.5, 7.0, 10.5, 1.0, 10.0),
-        createCuboidShape(6.5, 0.5, 7.0, 7.0, 1.0, 10.0),
-        createCuboidShape(4.5, 1.5, 8.25, 5.0, 3.0, 8.75),
-        createCuboidShape(6.5, 1.0, 10.0, 7.0, 4.0, 10.5),
-        createCuboidShape(10.0, 1.0, 10.0, 10.5, 4.0, 10.5),
-        createCuboidShape(10.0, 1.0, 6.5, 10.5, 4.0, 7.0),
-        createCuboidShape(6.5, 1.0, 6.5, 7.0, 4.0, 7.0),
-        createCuboidShape(5.0, 1.0, 8.25, 6.0, 1.5, 8.75)
+        createCuboidShape(5.375, 3.0, 7.75, 6.375, 3.5, 8.25),
+        createCuboidShape(7.375, 0.5, 6.0, 10.375, 1.0, 6.5),
+        createCuboidShape(7.375, 0.5, 9.5, 10.375, 1.0, 10.0),
+        createCuboidShape(10.375, 0.5, 6.5, 10.875, 1.0, 9.5),
+        createCuboidShape(6.875, 0.5, 6.5, 7.375, 1.0, 9.5),
+        createCuboidShape(4.875, 1.5, 7.75, 5.375, 3.0, 8.25),
+        createCuboidShape(6.875, 1.0, 9.5, 7.375, 4.0, 10.0),
+        createCuboidShape(10.375, 1.0, 9.5, 10.875, 4.0, 10.0),
+        createCuboidShape(10.375, 1.0, 6.0, 10.875, 4.0, 6.5),
+        createCuboidShape(6.875, 1.0, 6.0, 7.375, 4.0, 6.5),
+        createCuboidShape(5.375, 1.0, 7.75, 6.375, 1.5, 8.25),
+        createCuboidShape(10.375, 1.0, 6.5, 11.375, 4.0, 9.5),
+        createCuboidShape(6.375, 1.0, 6.5, 7.375, 4.0, 9.5),
+        createCuboidShape(7.375, 1.0, 5.5, 10.375, 4.0, 6.5),
+        createCuboidShape(7.375, 1.0, 9.5, 10.375, 4.0, 10.5),
+        createCuboidShape(7.375, 0.0, 6.5, 10.375, 1.0, 9.5)
     ).reduce { v1: VoxelShape?, v2: VoxelShape? ->
         VoxelShapes.combineAndSimplify(
             v1,
@@ -141,13 +141,13 @@ class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
         context: ShapeContext?
     ): VoxelShape {
         return when (state?.get(FACING)) {
-            Direction.DOWN -> SHAPE_N
-            Direction.UP -> SHAPE_N
+            Direction.DOWN -> SHAPE_S
+            Direction.UP -> SHAPE_S
             Direction.NORTH -> SHAPE_N
             Direction.SOUTH -> SHAPE_S
             Direction.WEST -> SHAPE_W
             Direction.EAST -> SHAPE_E
-            null -> SHAPE_N
+            null -> SHAPE_W
         }
     }
 
