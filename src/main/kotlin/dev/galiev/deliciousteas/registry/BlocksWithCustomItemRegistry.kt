@@ -2,6 +2,7 @@ package dev.galiev.deliciousteas.registry
 
 import dev.galiev.deliciousteas.DeliciousTeas
 import dev.galiev.deliciousteas.block.Couple
+import dev.galiev.deliciousteas.block.Kettle
 import net.minecraft.block.Block
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -11,6 +12,7 @@ object BlocksWithCustomItemRegistry {
     val BLOCKS: MutableMap<Block, Identifier> = mutableMapOf()
 
     val COUPLE = Couple().create("couple")
+
 
     init {
         BLOCKS.keys.forEach { block ->

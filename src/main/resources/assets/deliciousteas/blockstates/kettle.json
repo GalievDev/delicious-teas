@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "deliciousteas:block/kettle"
+    },
+    "facing=east": {
+      "model": "deliciousteas:block/kettle",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "deliciousteas:block/kettle",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "deliciousteas:block/kettle",
+      "y": 270
+    }
+  }
+}
