@@ -12,7 +12,7 @@ object BlocksWithCustomItemRegistry {
     val BLOCKS: MutableMap<Block, Identifier> = mutableMapOf()
 
     val COUPLE = Couple().create("couple")
-
+    val KETTLE = Kettle().create("kettle")
 
     init {
         BLOCKS.keys.forEach { block ->

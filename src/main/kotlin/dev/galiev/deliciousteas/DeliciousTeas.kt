@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import dev.galiev.deliciousteas.block.Couple
 import dev.galiev.deliciousteas.item.CoupleItem
 import dev.galiev.deliciousteas.registry.BlocksRegistry
+import dev.galiev.deliciousteas.registry.BlocksWithCustomItemRegistry
 import dev.galiev.deliciousteas.registry.ItemsRegistry
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
@@ -27,7 +28,7 @@ object DeliciousTeas: ModInitializer {
         ItemsRegistry
         BlocksRegistry
         Registry.register(Registries.ITEM_GROUP, DELICIOUS_TEAS, FabricItemGroup.builder().icon {
-            ItemStack(BlocksRegistry.BLOCKS.keys.first())
+            ItemStack(BlocksWithCustomItemRegistry.BLOCKS.keys.first())
         }.displayName(Text.literal("Delicious Teas")).build())
     }
 
