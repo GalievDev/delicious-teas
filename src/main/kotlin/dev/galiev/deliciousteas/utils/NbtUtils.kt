@@ -16,6 +16,10 @@ object NbtUtils {
         getTagCompound(stack)?.putInt(key, value)
     }
 
+    fun setDouble(stack: ItemStack?, key: String, value: Double) {
+        getTagCompound(stack)?.putDouble(key, value)
+    }
+
     fun getString(stack: ItemStack?, key: String): String {
         return if (stack?.hasNbt() == true) getTagCompound(stack)!!.getString(key) else ""
     }
@@ -26,6 +30,10 @@ object NbtUtils {
 
     fun getInt(stack: ItemStack?, key: String?): Int {
         return if (stack?.hasNbt() == true) getTagCompound(stack)!!.getInt(key) else 0
+    }
+
+    fun getDouble(stack: ItemStack?, key: String?): Double {
+        return if (stack?.hasNbt() == true) getTagCompound(stack)!!.getDouble(key) else 0.0
     }
 
     private fun validateCompound(stack: ItemStack?){

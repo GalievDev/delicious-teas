@@ -5,12 +5,16 @@ import dev.galiev.deliciousteas.utils.NbtUtils
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.item.TooltipContext
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.sound.SoundEvents
+import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
+import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.hit.HitResult
@@ -33,7 +37,7 @@ class KettleItem(block: Block = BlocksWithCustomItemRegistry.KETTLE, settings: F
 
         if (!NbtUtils.getBoolean(stack, "water")) {
             if (state?.fluidState == Blocks.WATER.defaultState.fluidState) {
-                NbtUtils.setInt(stack, "liters", 1)
+                NbtUtils.setDouble(stack, "liters", 1.0)
                 NbtUtils.setBoolean(stack, "water", true)
                 user?.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F)
 
@@ -54,6 +58,21 @@ class KettleItem(block: Block = BlocksWithCustomItemRegistry.KETTLE, settings: F
         }
 
         return ActionResult.PASS
+    }
+
+    override fun appendTooltip(
+        stack: ItemStack?,
+        world: World?,
+        tooltip: MutableList<Text>?,
+        context: TooltipContext?
+    ) {
+        val water = NbtUtils.getDouble(stack, "liters")
+        if (Screen.hasShiftDown()) {
+            tooltip?.add(Text.literal("$water/1 Litters").formatted(Formatting.AQUA))
+        } else {
+            tooltip?.add(Text.literal("Press Shift for more info").formatted(Formatting.YELLOW))
+        }
+        super.appendTooltip(stack, world, tooltip, context)
     }
 
 }
