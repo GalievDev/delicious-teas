@@ -1,23 +1,31 @@
 package dev.galiev.deliciousteas.block
 
+import dev.galiev.deliciousteas.item.custom.TeaIngredient
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.Properties
+import net.minecraft.util.ActionResult
 import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
+import net.minecraft.util.Hand
 import net.minecraft.util.function.BooleanBiFunction
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
+import net.minecraft.world.World
 import java.util.stream.Stream
 
 class Kettle(settings: FabricBlockSettings = FabricBlockSettings.create().liquid()): Block(settings) {
+    private val ingredients: ArrayList<TeaIngredient> = arrayListOf()
+
     companion object {
         val FACING = Properties.FACING
     }
@@ -214,5 +222,39 @@ class Kettle(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>?) {
         builder?.add(FACING)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onUse(
+        state: BlockState?,
+        world: World?,
+        pos: BlockPos?,
+        player: PlayerEntity?,
+        hand: Hand?,
+        hit: BlockHitResult?
+    ): ActionResult {
+        val stack = player?.getStackInHand(hand)
+        if (hasIngredients() && stack?.isEmpty!!) {
+            removeIngredient(ingredients[ingredients.lastIndex])
+        } else if (stack?.item is TeaIngredient) {
+            addIngredient(stack.item as TeaIngredient)
+        }
+        return super.onUse(state, world, pos, player, hand, hit)
+    }
+
+    fun getIngredients(): ArrayList<TeaIngredient> {
+        return ingredients
+    }
+
+    fun addIngredient(ingredient: TeaIngredient) {
+        ingredients.add(ingredient)
+    }
+
+    fun removeIngredient(ingredient: TeaIngredient) {
+        ingredients.remove(ingredient)
+    }
+
+    fun hasIngredients(): Boolean {
+        return ingredients.size != 0
     }
 }
