@@ -43,6 +43,7 @@ class KettleItem(block: Block = BlocksWithCustomItemRegistry.KETTLE, settings: F
 
                 return TypedActionResult.success(stack)
             }
+            return TypedActionResult.pass(stack)
         }
 
         return TypedActionResult.pass(stack)
@@ -50,14 +51,16 @@ class KettleItem(block: Block = BlocksWithCustomItemRegistry.KETTLE, settings: F
 
     override fun useOnBlock(context: ItemUsageContext?): ActionResult {
         val world = context?.world
+        val user = context?.player
         val item = context?.stack
         val block = world?.getBlockState(context.blockPos)
 
-        if (block == BlocksWithCustomItemRegistry.COUPLE) {
-
+        return if (block == BlocksWithCustomItemRegistry.COUPLE) {
+            user?.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F)
+            ActionResult.SUCCESS
+        } else {
+            ActionResult.PASS
         }
-
-        return ActionResult.PASS
     }
 
     override fun appendTooltip(
