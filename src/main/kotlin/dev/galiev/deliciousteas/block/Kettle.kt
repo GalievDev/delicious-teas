@@ -191,6 +191,7 @@ class Kettle(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
     }.get()
 
 
+    @Deprecated("Deprecated in Java")
     override fun getOutlineShape(
         state: BlockState?,
         world: BlockView?,
@@ -212,10 +213,12 @@ class Kettle(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
         return defaultState.with(FACING, ctx?.player?.horizontalFacing?.opposite)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun rotate(state: BlockState?, rotation: BlockRotation?): BlockState {
         return state?.with(FACING, rotation?.rotate(state.get(FACING)))!!
     }
 
+    @Deprecated("Deprecated in Java")
     override fun mirror(state: BlockState?, mirror: BlockMirror?): BlockState {
         return state?.rotate(mirror?.getRotation(state.get(FACING)))!!
     }
