@@ -68,7 +68,7 @@ class KettleItem(block: Block = BlocksWithCustomItemRegistry.KETTLE, settings: F
     ) {
         val water = NbtUtils.getDouble(stack, "liters")
         if (Screen.hasShiftDown()) {
-            tooltip?.add(Text.literal("$water/1 Litters").formatted(Formatting.AQUA))
+            tooltip?.add(Text.literal("$water/1.0 Litters").formatted(Formatting.AQUA))
         } else {
             tooltip?.add(Text.literal("Press Shift for more info").formatted(Formatting.YELLOW))
         }
