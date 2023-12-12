@@ -10,10 +10,8 @@ import net.minecraft.client.item.TooltipContext
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
-import net.minecraft.item.ItemUsageContext
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
-import net.minecraft.util.ActionResult
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
@@ -40,27 +38,10 @@ class KettleItem(block: Block = BlocksWithCustomItemRegistry.KETTLE, settings: F
                 NbtUtils.setDouble(stack, "liters", 1.0)
                 NbtUtils.setBoolean(stack, "water", true)
                 user?.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F)
-
-                return TypedActionResult.success(stack)
             }
-            return TypedActionResult.pass(stack)
         }
 
         return TypedActionResult.pass(stack)
-    }
-
-    override fun useOnBlock(context: ItemUsageContext?): ActionResult {
-        val world = context?.world
-        val user = context?.player
-        val item = context?.stack
-        val block = world?.getBlockState(context.blockPos)
-
-        return if (block == BlocksWithCustomItemRegistry.COUPLE) {
-            user?.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F)
-            ActionResult.SUCCESS
-        } else {
-            ActionResult.PASS
-        }
     }
 
     override fun appendTooltip(
