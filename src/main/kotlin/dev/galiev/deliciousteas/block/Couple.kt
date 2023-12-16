@@ -131,7 +131,7 @@ class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
             v2,
             BooleanBiFunction.OR
         )
-    }.get();
+    }.get()
 
     @Deprecated("Deprecated in Java")
     override fun getOutlineShape(
