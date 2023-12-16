@@ -1,6 +1,5 @@
 package dev.galiev.deliciousteas.item
 
-import dev.galiev.deliciousteas.block.Couple
 import dev.galiev.deliciousteas.registry.BlocksWithCustomItemRegistry
 import dev.galiev.deliciousteas.utils.NbtUtils
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
@@ -11,10 +10,8 @@ import net.minecraft.client.item.TooltipContext
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
-import net.minecraft.item.ItemUsageContext
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
-import net.minecraft.util.ActionResult
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
@@ -45,29 +42,6 @@ class KettleItem(block: Block = BlocksWithCustomItemRegistry.KETTLE, settings: F
         }
 
         return TypedActionResult.pass(stack)
-    }
-
-    override fun useOnBlock(context: ItemUsageContext?): ActionResult {
-        val world = context?.world
-        val block = world?.getBlockState(context.blockPos)?.block
-        val stack = block?.asItem()?.defaultStack
-
-        if (block is Couple) {
-            if (NbtUtils.getBoolean(context.stack, "water")) {
-                var liters = NbtUtils.getDouble(context.stack, "liters")
-                if (liters >= 0.25 && !block.isFull()) {
-                    liters -= 0.25
-                    NbtUtils.setBoolean(stack, "water", true)
-                    NbtUtils.setDouble(context.stack, "liters", liters)
-                    return ActionResult.SUCCESS
-                } else {
-                    return ActionResult.FAIL
-                }
-            } else {
-                return ActionResult.FAIL
-            }
-        }
-        return super.useOnBlock(context)
     }
 
     override fun appendTooltip(

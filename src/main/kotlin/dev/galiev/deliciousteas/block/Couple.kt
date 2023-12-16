@@ -1,31 +1,42 @@
 package dev.galiev.deliciousteas.block
 
+import dev.galiev.deliciousteas.block.entity.CoupleBlockEntity
+import dev.galiev.deliciousteas.item.KettleItem
+import dev.galiev.deliciousteas.registry.BlockEntityRegistry
 import dev.galiev.deliciousteas.utils.NbtUtils
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.ShapeContext
+import net.minecraft.block.*
+import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityTicker
+import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
+import net.minecraft.state.property.EnumProperty
 import net.minecraft.state.property.Properties
+import net.minecraft.util.ActionResult
 import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
+import net.minecraft.util.Hand
 import net.minecraft.util.function.BooleanBiFunction
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
+import net.minecraft.world.World
 import java.util.stream.Stream
 
 
-class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid()): Block(settings) {
+class Couple(settings: FabricBlockSettings = FabricBlockSettings.create()): BlockWithEntity(settings), BlockEntityProvider {
     companion object {
+        val FLUID: EnumProperty<LiquidBlock.State> = EnumProperty.of("fluid", LiquidBlock.State::class.java)
         val FACING = Properties.FACING
     }
 
     init {
-        defaultState = ((stateManager.defaultState as BlockState).with(FACING, Direction.SOUTH))
+        defaultState = ((stateManager.defaultState as BlockState).with(FACING, Direction.SOUTH).with(FLUID, LiquidBlock.State.EMPTY))
     }
 
     val SHAPE_N = Stream.of(
@@ -159,11 +170,45 @@ class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
         return state?.rotate(mirror?.getRotation(state.get(FACING)))!!
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>?) {
-        builder?.add(FACING)
+    override fun onUse(
+        state: BlockState?,
+        world: World?,
+        pos: BlockPos?,
+        player: PlayerEntity?,
+        hand: Hand?,
+        hit: BlockHitResult?
+    ): ActionResult {
+        val stack = player?.getStackInHand(hand)
+        val blockEntity = world?.getBlockEntity(pos)
+
+        if (stack?.item is KettleItem && blockEntity is CoupleBlockEntity) {
+            if (NbtUtils.getBoolean(stack, "water")) {
+                var liters = NbtUtils.getDouble(stack, "liters")
+                if (liters >= 0.25 && !blockEntity.hasTea) {
+                    liters -= 0.25
+                    blockEntity.hasTea = true
+                    NbtUtils.setDouble(stack, "liters", liters)
+                    return ActionResult.SUCCESS
+                } else {
+                    return ActionResult.FAIL
+                }
+            } else {
+                return ActionResult.FAIL
+            }
+        }
+        return super.onUse(state, world, pos, player, hand, hit)
     }
 
-    fun isFull(): Boolean {
-        return NbtUtils.getBoolean(this.asItem().defaultStack, "water")
+    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>?) {
+        builder?.add(FACING)
+        builder?.add(FLUID)
     }
+
+    override fun createBlockEntity(pos: BlockPos?, state: BlockState?): BlockEntity = CoupleBlockEntity(pos, state)
+
+    override fun <T : BlockEntity?> getTicker(
+        world: World?,
+        state: BlockState?,
+        type: BlockEntityType<T>?
+    ): BlockEntityTicker<T>? = checkType(type, BlockEntityRegistry.COUPLE_ENTITY, CoupleBlockEntity::tick)
 }
