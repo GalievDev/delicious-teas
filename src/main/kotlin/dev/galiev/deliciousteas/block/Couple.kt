@@ -1,27 +1,21 @@
 package dev.galiev.deliciousteas.block
 
-import dev.galiev.deliciousteas.registry.ItemsRegistry
 import dev.galiev.deliciousteas.utils.NbtUtils
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.Properties
-import net.minecraft.util.ActionResult
 import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
-import net.minecraft.util.Hand
 import net.minecraft.util.function.BooleanBiFunction
-import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
-import net.minecraft.world.World
 import java.util.stream.Stream
 
 
@@ -169,33 +163,7 @@ class Couple(settings: FabricBlockSettings = FabricBlockSettings.create().liquid
         builder?.add(FACING)
     }
 
-    override fun onUse(
-        state: BlockState?,
-        world: World?,
-        pos: BlockPos?,
-        player: PlayerEntity?,
-        hand: Hand?,
-        hit: BlockHitResult?
-    ): ActionResult {
-        val blockItem = state?.block?.asItem()?.defaultStack
-        val stack = player?.getStackInHand(hand)
-        if (stack == ItemsRegistry.KETTLE_ITEM.defaultStack) {
-            if (NbtUtils.getBoolean(stack, "water")) {
-                NbtUtils.setBoolean(blockItem, "water", false)
-                var liters = NbtUtils.getDouble(stack, "liters")
-
-                if (liters >= 0.25) {
-                    liters -= 0.25
-                    NbtUtils.setBoolean(blockItem, "water", true)
-                    NbtUtils.setDouble(stack, "liters", liters)
-                    return ActionResult.SUCCESS
-                } else {
-                    return ActionResult.PASS
-                }
-            } else {
-                return ActionResult.PASS
-            }
-        }
-        return ActionResult.PASS
+    fun isFull(): Boolean {
+        return NbtUtils.getBoolean(this.asItem().defaultStack, "water")
     }
 }
