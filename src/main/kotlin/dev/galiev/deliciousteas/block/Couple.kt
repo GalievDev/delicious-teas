@@ -5,7 +5,10 @@ import dev.galiev.deliciousteas.item.KettleItem
 import dev.galiev.deliciousteas.registry.BlockEntityRegistry
 import dev.galiev.deliciousteas.utils.NbtUtils
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
-import net.minecraft.block.*
+import net.minecraft.block.Block
+import net.minecraft.block.BlockState
+import net.minecraft.block.BlockWithEntity
+import net.minecraft.block.ShapeContext
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
@@ -29,7 +32,7 @@ import net.minecraft.world.World
 import java.util.stream.Stream
 
 
-class Couple(settings: FabricBlockSettings = FabricBlockSettings.create()): BlockWithEntity(settings), BlockEntityProvider {
+class Couple(settings: FabricBlockSettings = FabricBlockSettings.create()): BlockWithEntity(settings) {
     companion object {
         val FLUID: EnumProperty<LiquidBlock.State> = EnumProperty.of("fluid", LiquidBlock.State::class.java)
         val FACING = Properties.FACING
